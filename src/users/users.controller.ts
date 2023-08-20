@@ -6,10 +6,12 @@ import {
   Param,
   Post,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('users')
 export class UsersController {
@@ -19,7 +21,8 @@ export class UsersController {
   create(@Body() createUserDto: CreateUserDto): Promise<User> {
     return this.usersService.create(createUserDto);
   }
-
+  
+  @UseGuards(AuthGuard)
   @Get()
   findAll(): Promise<User[]> {
     return this.usersService.findAll();
