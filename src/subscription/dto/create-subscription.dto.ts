@@ -1,5 +1,7 @@
 import { ObjectId } from "typeorm";
 
 export class CreateSubscriptionDto {
-    serviceId: ObjectId
+    serviceId: ObjectId;
+    subscriptionStatus: string;
+    userId: ObjectId;xwxw
 }

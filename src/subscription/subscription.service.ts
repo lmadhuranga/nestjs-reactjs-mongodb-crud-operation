@@ -15,8 +15,8 @@ export class SubscriptionService {
   create(createSubscriptionDto: CreateSubscriptionDto): Promise<Subscription> {
     const subscription = new Subscription();
     subscription.serviceId = createSubscriptionDto.serviceId;
-    subscription.subscriptionStatus = "Pending";
-    subscription.userId =new ObjectId(3);
+    subscription.subscriptionStatus = createSubscriptionDto.subscriptionStatus;
+    subscription.userId = createSubscriptionDto.userId;
 
     return this.subscriptionRepository.save(subscription);
   }
@@ -27,7 +27,7 @@ export class SubscriptionService {
 
   findOne(nId: number) {
     const id = new ObjectId(nId);
-    return this.subscriptionRepository.findOneBy({id})
+    return this.subscriptionRepository.findOneBy({ id })
   }
 
   update(id: number, updateSubscriptionDto: UpdateSubscriptionDto) {
