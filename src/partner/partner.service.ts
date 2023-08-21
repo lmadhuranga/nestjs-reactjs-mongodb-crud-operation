@@ -1,15 +1,23 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePartnerDto } from './dto/create-partner.dto';
 import { UpdatePartnerDto } from './dto/update-partner.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Partner } from './entities/partner.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class PartnerService {
+  constructor(
+    @InjectRepository(Partner)
+    private readonly partnerRepository: Repository<Partner>,
+  ) {}
+
   create(createPartnerDto: CreatePartnerDto) {
     return 'This action adds a new partner';
   }
 
   findAll() {
-    return `This action returns all partner`;
+    return this.partnerRepository.find();
   }
 
   findOne(id: number) {

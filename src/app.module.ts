@@ -7,20 +7,16 @@ import { PartnerModule } from './partner/partner.module';
 import { ServiceModule } from './service/service.module';
 import { SubscriptionModule } from './subscription/subscription.module';
 import { SubscriptionLogModule } from './subscription-log/subscription-log.module';
-import { StatisticModule } from './statistic/statistic.module';
+import mysqlConfig from 'mysql.config';
+import mongodbConfig from 'mongodb.config';
+import { Subscribe } from './subscribe/entities/subscribe.entity';
+import { Partner } from './partner/entities/partner.entity';
+
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: '127.0.0.1',
-      port: 3306,
-      username: 'root',
-      password: '',
-      database: 'test',
-      autoLoadEntities: true,
-      synchronize: true,
-    }),
+    // TypeOrmModule.forRoot(mysqlConfig),
+    TypeOrmModule.forRoot(mongodbConfig), 
     AuthModule,
     UsersModule,
     SubscribeModule,
@@ -28,7 +24,6 @@ import { StatisticModule } from './statistic/statistic.module';
     ServiceModule,
     SubscriptionModule,
     SubscriptionLogModule,
-    StatisticModule,
   ],
 })
 export class AppModule {}

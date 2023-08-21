@@ -22,7 +22,7 @@ export class UsersController {
     return this.usersService.create(createUserDto);
   }
   
-  @UseGuards(AuthGuard)
+  // @UseGuards(AuthGuard)
   @Get()
   findAll(): Promise<User[]> {
     return this.usersService.findAll();

@@ -1,8 +1,8 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ObjectId, ObjectIdColumn } from 'typeorm';
 
 @Entity()
 export class Subscribe {
-    @PrimaryGeneratedColumn()
+    @ObjectIdColumn()
     id: number;
     
     @Column()

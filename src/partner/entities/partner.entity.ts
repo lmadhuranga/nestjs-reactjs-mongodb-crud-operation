@@ -1,9 +1,9 @@
-import { Entity, ObjectIdColumn, Column } from 'typeorm';
+import { Entity, ObjectIdColumn, Column, PrimaryGeneratedColumn } from 'typeorm';
 import { ObjectId } from 'mongodb';
 
 @Entity()
 export class Partner {
-  @ObjectIdColumn()
+  @PrimaryGeneratedColumn()
   id: ObjectId;
 
   @Column()
@@ -11,6 +11,4 @@ export class Partner {
 
   @Column()
   description: string;
-
-  // Other partner-related fields
 }
