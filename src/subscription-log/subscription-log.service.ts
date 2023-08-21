@@ -14,7 +14,7 @@ export class SubscriptionLogService {
   ) { }
   create(createSubscriptionLogDto: CreateSubscriptionLogDto) {
     const subscriptionLog = new SubscriptionLog();
-
+    subscriptionLog.subscriptionId = new ObjectId(1);
     return this.subscriptionLogRepository.save(subscriptionLog);
   }
 
