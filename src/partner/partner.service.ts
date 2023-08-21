@@ -4,6 +4,7 @@ import { UpdatePartnerDto } from './dto/update-partner.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Partner } from './entities/partner.entity';
 import { Repository } from 'typeorm';
+import { ObjectId } from 'mongodb';
 
 @Injectable()
 export class PartnerService {
@@ -12,23 +13,13 @@ export class PartnerService {
     private readonly partnerRepository: Repository<Partner>,
   ) {}
 
-  create(createPartnerDto: CreatePartnerDto) {
-    return 'This action adds a new partner';
-  }
-
   findAll() {
     return this.partnerRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} partner`;
+  findOne(nId: number) {
+    const id = new ObjectId(nId);
+    return this.partnerRepository.findOneBy({id});
   }
-
-  update(id: number, updatePartnerDto: UpdatePartnerDto) {
-    return `This action updates a #${id} partner`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} partner`;
-  }
+ 
 }

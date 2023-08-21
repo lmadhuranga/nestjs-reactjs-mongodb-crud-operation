@@ -14,6 +14,4 @@ export class Service {
 
   @Column()
   description: string;
-
-  // Other service-related fields
 }
