@@ -1,15 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Request } from '@nestjs/common';
 import { SubscribeService } from './subscribe.service';
 import { CreateSubscribeDto } from './dto/create-subscribe.dto';
 import { UpdateSubscribeDto } from './dto/update-subscribe.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('subscribe')
 export class SubscribeController {
-  constructor(private readonly subscribeService: SubscribeService) {}
+  constructor(private readonly subscribeService: SubscribeService) { }
 
+  @UseGuards(AuthGuard)
   @Post()
-  create(@Body() createSubscribeDto: CreateSubscribeDto) {
-    return this.subscribeService.create(createSubscribeDto);
+  create(@Body() createSubscribeDto: CreateSubscribeDto, @Request() req) {
+    const { user: { sub } } = req; 
+    return this.subscribeService.create(createSubscribeDto, sub);
   }
 
   @Get()
@@ -17,10 +20,10 @@ export class SubscribeController {
     return this.subscribeService.findAll();
   }
 
-  @Get(':token')
+  @Get(':id')
   findOne(@Param('token') token: string) {
-    return this.subscribeService.makeSubscription(token);
-  } 
+    
+  }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateSubscribeDto: UpdateSubscribeDto) {
