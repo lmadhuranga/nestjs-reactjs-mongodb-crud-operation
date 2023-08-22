@@ -77,6 +77,7 @@ export class SubscribeService {
     // Todo:: Check is already send a request  or not 
 
     // Todo:: add a log to pending 
+    this.makeLogRequest("UNSUBSCRIBE", "PENDING", userId);
 
     // Make subcription is pending 
     const { serviceId, _id } = await this.makePendingUnsubscription(subscriptionId);
@@ -96,11 +97,13 @@ export class SubscribeService {
     if (partnerRes.status === 'OK') {
       const updatedSubscribe = await this.update(_id, { action: 'UNSUBSCRIBED' });
       // Todo:: add a log to with succsess status 
+      this.makeLogRequest("UNSUBSCRIBE", "SUCCESS", userId, _id);
+    
       return { status: "OK", data: updatedSubscribe };
     }
 
     // // Todo:: add a log to with failed, external api call status 
-
+    this.makeLogRequest("UNSUBSCRIBE", "FAILED", userId);
     return { status: 'Failed' };
 
   }
