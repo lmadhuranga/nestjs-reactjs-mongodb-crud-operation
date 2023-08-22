@@ -41,7 +41,7 @@ export class SubscribeService {
     const partnerRes = await this.makeExternalSub(payLoad);
 
     if (partnerRes.status === 'OK') {
-      const updatedSubscribe = await this.update(_id, { action: 'subscribe' });
+      const updatedSubscribe = await this.update(_id, { action: 'SUBSCRIBED' });
       // Todo:: add a log to with succsess status 
       return { status: "OK", data: updatedSubscribe };
     }
@@ -78,7 +78,7 @@ export class SubscribeService {
     }
 
     // // Todo:: add a log to with failed, external api call status 
-    
+
     // return { status: 'Failed' };
 
   }
