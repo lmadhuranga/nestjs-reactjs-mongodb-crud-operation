@@ -4,11 +4,13 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { PartnerModule } from './partner/partner.module';
 import { ServiceModule } from './service/service.module';
-import { SubscriptionLogModule } from './subscription-log/subscription-log.module';
 import mysqlConfig from 'mysql.config';
 import mongodbConfig from 'mongodb.config';
 import { Partner } from './partner/entities/partner.entity';
-import { SubscribeModule } from './subscribe/subscribe.module'; 
+import { SubscribeModule } from './subscribe/subscribe.module';    
+import { LogServiceService } from './log-service/log-service.service';
+import { LogService } from './log-service/entities/log-service.entity';
+import { LogServiceModule } from './log-service/log-service.module';
 @Module({
   imports: [
     // TypeOrmModule.forRoot(mysqlConfig),
@@ -17,8 +19,9 @@ import { SubscribeModule } from './subscribe/subscribe.module';
     UsersModule,
     PartnerModule,
     ServiceModule,
-    SubscriptionLogModule,
-    SubscribeModule, 
+    SubscribeModule,
+    LogServiceModule,
   ],
+  providers: [],
 })
 export class AppModule {}
