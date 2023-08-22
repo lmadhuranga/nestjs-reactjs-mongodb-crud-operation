@@ -3,16 +3,18 @@ import { SubscribeService } from './subscribe.service';
 import { CreateSubscribeDto } from './dto/create-subscribe.dto';
 import { UpdateSubscribeDto } from './dto/update-subscribe.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { CreateUnsubscribeDto } from './dto/create-unsubscribe.dto';
 
-@Controller('subscribe')
-export class SubscribeController {
+@Controller('unsubscribe')
+export class UnsubscribeController {
   constructor(private readonly subscribeService: SubscribeService) { }
 
   @UseGuards(AuthGuard)
   @Post()
-  create(@Body() createSubscribeDto: CreateSubscribeDto, @Request() req) {
-    const { user: { sub } } = req; 
-    return this.subscribeService.doSubscribe(createSubscribeDto, sub);
+  create(@Body() createUnsubscribeDto: CreateUnsubscribeDto, @Request() req) {
+    const { user: { sub } } = req;
+    const { subscriptionId } = createUnsubscribeDto;
+    return this.subscribeService.doUnsubscribe(subscriptionId, sub);
   }
 
   @Get()
@@ -22,7 +24,7 @@ export class SubscribeController {
 
   @Get(':id')
   findOne(@Param('token') token: string) {
-    
+
   }
 
   @Patch(':id')

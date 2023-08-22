@@ -6,7 +6,7 @@ import { ObjectId } from 'mongodb';
 @Entity()
 export class Subscribe {
     @ObjectIdColumn()
-    _id: number;
+    _id: ObjectId;
 
     @Column()
     userId: ObjectId;

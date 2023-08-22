@@ -8,9 +8,7 @@ import { SubscriptionLogModule } from './subscription-log/subscription-log.modul
 import mysqlConfig from 'mysql.config';
 import mongodbConfig from 'mongodb.config';
 import { Partner } from './partner/entities/partner.entity';
-import { SubscribeModule } from './subscribe/subscribe.module';
-
-
+import { SubscribeModule } from './subscribe/subscribe.module'; 
 @Module({
   imports: [
     // TypeOrmModule.forRoot(mysqlConfig),
@@ -20,7 +18,7 @@ import { SubscribeModule } from './subscribe/subscribe.module';
     PartnerModule,
     ServiceModule,
     SubscriptionLogModule,
-    SubscribeModule,
+    SubscribeModule, 
   ],
 })
 export class AppModule {}
