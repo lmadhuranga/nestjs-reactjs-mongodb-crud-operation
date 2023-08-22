@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateSubscribeDto } from './dto/create-subscribe.dto';
 import { UpdateSubscribeDto } from './dto/update-subscribe.dto';
 import { JwtService } from '@nestjs/jwt';
@@ -12,13 +12,15 @@ import { Partner } from 'src/partner/entities/partner.entity';
 export class SubscribeService {
   constructor(
     @InjectRepository(Subscribe)
-    private readonly usersRepository: Repository<Subscribe>,
+    private readonly subscribesRepository: Repository<Subscribe>,
+    private jwtService: JwtService,
     // private partnerService: PartnerService,
   ) { }
 
   async create(createSubscribeDto: CreateSubscribeDto, userId: ObjectId) {
     // Todo:: Check is already send a request  or not 
 
+    // Todo:: add a log to pending
     // Make subcription is pending
     const { serviceId, _id } = await this.makePendingSubscription(createSubscribeDto, userId);
 
@@ -30,13 +32,18 @@ export class SubscribeService {
       action: "sub",
       msisdn: '12345'
     }
-    const partnerRes = this.makeExternalSub(payLoad);
+
+    // Make api call extern partner api 
+    const partnerRes = await this.makeExternalSub(payLoad);
 
     if (partnerRes.status === 'OK') {
-      return partnerRes;
+      const updatedSubscribe = await this.update(_id, { action: 'sub' });
+      // Todo:: add a log to with succsess status 
+      return { status: "OK", data: updatedSubscribe };
     }
 
-    return {status:'Failed'}
+    // Todo:: add a log to with failed, external api call status 
+    return { status: 'Failed' };
 
   }
 
@@ -48,8 +55,14 @@ export class SubscribeService {
     return `This action returns a #${id} subscribe`;
   }
 
-  update(id: number, updateSubscribeDto: UpdateSubscribeDto) {
-    return `This action updates a #${id} subscribe`;
+  async update(id: any, updateSubscribeDto: UpdateSubscribeDto) {
+    const subscribeM = await this.subscribesRepository.findOne({ where: { _id: id } });
+
+    if (!subscribeM) {
+      throw new NotFoundException(`Service with ID ${id} not found`);
+    }
+    subscribeM.action = "SUBSCRIBED";
+    return this.subscribesRepository.save(subscribeM);
   }
 
   remove(id: number) {
@@ -61,13 +74,23 @@ export class SubscribeService {
     subscribe.action = "PENDING";
     subscribe.serviceId = createSubscribeDto.serviceId;
     subscribe.userId = userId;
-    return await this.usersRepository.save(subscribe);
+    return await this.subscribesRepository.save(subscribe);
   }
 
-  makeExternalSub(payLoad: any) {
-    if (payLoad.msisdn == '') {
-      return null
+  async makeExternalSub(payLoad: any) {
+    
+    if (payLoad.msisdn === '') {
+      return { status: 'Failed' }
     }
+    // jwtToken token
+    const jwtToken = this.jwtService.sign(payLoad)
+    
+   /* 
+    try {
+      // Todo:: Make external api call
+    } catch (error) {
+      
+    } */
 
     return { status: 'OK' }
   }
