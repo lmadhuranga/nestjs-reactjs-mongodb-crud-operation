@@ -8,6 +8,7 @@ import { SubscriptionModule } from './subscription/subscription.module';
 import { SubscriptionLogModule } from './subscription-log/subscription-log.module';
 import mysqlConfig from 'mysql.config';
 import mongodbConfig from 'mongodb.config';
+import { Partner } from './partner/entities/partner.entity';
 
 
 @Module({

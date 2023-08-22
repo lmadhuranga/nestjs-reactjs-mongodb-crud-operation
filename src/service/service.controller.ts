@@ -14,7 +14,8 @@ export class ServiceController {
 
   @Get()
   findAll() {
-    return this.serviceService.findAll();
+    // return this.serviceService.findAll();
+    return this.serviceService.findAllWithPartners();
   }
 
   @Get(':id')

@@ -4,7 +4,7 @@ import { ObjectId } from 'mongodb';
 @Entity()
 export class Subscription {
   @ObjectIdColumn()
-  id: ObjectId;
+  _id: ObjectId;
 
   @Column()
   userId: ObjectId;

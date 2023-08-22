@@ -11,6 +11,6 @@ import { Partner } from './entities/partner.entity';
     TypeOrmModule.forFeature([Partner]),
   ],
   controllers: [PartnerController],
-  providers: [PartnerService]
+  providers: [PartnerService],
 })
 export class PartnerModule { }

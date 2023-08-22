@@ -1,14 +1,18 @@
-import { Entity, ObjectIdColumn, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, ObjectIdColumn, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { ObjectId } from 'mongodb';
+import { Service } from 'src/service/entities/service.entity';
 
 @Entity()
 export class Partner {
-  @PrimaryGeneratedColumn()
-  id: ObjectId;
+  @ObjectIdColumn()
+  _id: ObjectId;
 
   @Column()
   name: string;
 
   @Column()
   description: string;
+
+  @OneToMany(() => Service, service => service.partner)
+  services: Service[];
 }

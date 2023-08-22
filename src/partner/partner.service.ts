@@ -11,15 +11,23 @@ export class PartnerService {
   constructor(
     @InjectRepository(Partner)
     private readonly partnerRepository: Repository<Partner>,
-  ) {}
+  ) { }
 
   findAll() {
     return this.partnerRepository.find();
   }
 
-  findOne(nId: number) {
+  findOne(nId: string) {
     const id = new ObjectId(nId);
-    return this.partnerRepository.findOneBy({id});
+    // console.log(`id`, id);
+    this.partnerRepository.findOne({ where:{_id:id} })
+      .then(partner => {
+        console.log(partner); // Here you can work with the partner object
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    // return this.partnerRepository.findOne({ where: { id: id } });
   }
- 
+
 }

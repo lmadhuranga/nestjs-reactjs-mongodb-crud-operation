@@ -27,7 +27,7 @@ export class SubscriptionService {
 
   findOne(nId: number) {
     const id = new ObjectId(nId);
-    return this.subscriptionRepository.findOneBy({ id })
+    return this.subscriptionRepository.findOneBy({ _id:id })
   }
 
   update(id: number, updateSubscriptionDto: UpdateSubscriptionDto) {

@@ -1,10 +1,12 @@
-import { Entity, ObjectIdColumn, Column } from 'typeorm';
+import { Entity, ObjectIdColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { ObjectId } from 'mongodb';
+import { Partner } from 'src/partner/entities/partner.entity';
+import { Exclude, Expose } from 'class-transformer';
 
 @Entity()
 export class Service {
   @ObjectIdColumn()
-  id: ObjectId;
+  _id: ObjectId;
 
   @Column()
   partnerId: ObjectId;
@@ -14,4 +16,8 @@ export class Service {
 
   @Column()
   description: string;
+
+  @ManyToOne(() => Partner, partner => partner.services)
+  @JoinColumn({ name: 'partnerId' })
+  partner: Partner;
 }

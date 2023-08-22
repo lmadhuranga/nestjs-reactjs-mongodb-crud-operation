@@ -4,7 +4,7 @@ import { ObjectId } from 'mongodb';
 @Entity()
 export class Statistic {
   @ObjectIdColumn()
-  id: ObjectId;
+  _id: ObjectId;
 
   @Column()
   totalUsers: number;

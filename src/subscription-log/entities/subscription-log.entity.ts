@@ -4,7 +4,7 @@ import { Entity, ObjectIdColumn, Column } from 'typeorm';
 @Entity()
 export class SubscriptionLog {
   @ObjectIdColumn()
-  id: ObjectId;
+  _id: ObjectId;
 
   @Column()
   subscriptionId: ObjectId;

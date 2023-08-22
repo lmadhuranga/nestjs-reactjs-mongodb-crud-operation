@@ -24,7 +24,7 @@ export class SubscriptionLogService {
 
   findOne(nid: number) {
     const id = new ObjectId(nid);
-    return this.subscriptionLogRepository.findOneBy({ id });
+    return this.subscriptionLogRepository.findOneBy({ _id:id });
   }
 
   update(id: number, updateSubscriptionLogDto: UpdateSubscriptionLogDto) {

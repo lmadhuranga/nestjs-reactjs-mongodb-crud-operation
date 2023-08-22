@@ -14,6 +14,7 @@ export class PartnerController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.partnerService.findOne(+id);
+    // console.log(`this.partnerService.findOne(id)`,this.partnerService.findOne(id));
+    return this.partnerService.findOne(id);
   }
 }
