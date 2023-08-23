@@ -19,6 +19,9 @@ export class LogService {
     status: string;
 
     @Column()
+    userType: string;
+
+    @Column()
     log_details: string;
 
     @Column()

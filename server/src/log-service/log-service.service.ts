@@ -22,8 +22,7 @@ export class LogServiceService {
     logService.created_at =  new Date();  
     return await this.logServiceRepository.save(logService);
   }
-
-
+  
   findAll() {
     return `This action returns all logService`;
   }
@@ -43,4 +42,15 @@ export class LogServiceService {
   remove(id: number) {
     return `This action removes a #${id} logService`;
   }
+
+  async makeLogRequest(action: string, status: string, userType: string, userId: ObjectId, subscribeId?: ObjectId) {
+    const logData = new LogService();
+    logData.action = action;
+    logData.status = status;
+    logData.userId = userId;
+    logData.userType = userType;
+    logData.subscribeId = subscribeId;
+    return await this.logServiceRepository.create(logData);
+  }
+
 }

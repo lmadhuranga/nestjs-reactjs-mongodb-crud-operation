@@ -62,8 +62,7 @@ const SubscriptionPackages: React.FC = () => {
 
   const buttons = (id: number) => (
     <>
-      <button onClick={(e) => subBtnClickHandler(id)}>Sub</button>
-      < button onClick={(e) => unsubBtnClickHandler(id)}> Unsub</button >
+      <button onClick={(e) => subBtnClickHandler(id)}>Sub</button> | <button onClick={(e) => unsubBtnClickHandler(id)}> Unsub</button >
     </>
   )
 

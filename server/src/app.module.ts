@@ -10,6 +10,7 @@ import { SubscribeModule } from './subscribe/subscribe.module';
 import { LogServiceModule } from './log-service/log-service.module';
 import { StatisticsModule } from './statistics/statistics.module';
 import { JwtModule } from '@nestjs/jwt';
+import { CallbacksModule } from './callbacks/callbacks.module';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -30,6 +31,7 @@ import * as path from 'path';
     SubscribeModule,
     LogServiceModule,
     StatisticsModule,
+    CallbacksModule,
   ],
   providers: [],
 })
