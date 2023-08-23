@@ -12,8 +12,8 @@ import { APP_GUARD } from '@nestjs/core';
     UsersModule,
     JwtModule.register({
       global: true,
-      secret: jwtConstants.secret,
-      signOptions: { expiresIn: '60s' },
+      secret: jwtConstants.secret, // Todo:: need to integrate the RSA 256 key with private keys
+      signOptions: { expiresIn: '1d' }, 
     }),
   ],
   providers: [AuthService],

@@ -15,7 +15,6 @@ export class AuthController {
   @UseGuards(AuthGuard)
   @Get()
   getProfile(@Request() req) {
-    // return {msg :'ss'}
     return req.user;
   }
 

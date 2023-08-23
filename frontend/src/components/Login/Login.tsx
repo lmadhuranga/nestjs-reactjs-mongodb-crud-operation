@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import './Login.css'; // Import your custom CSS file
+import { useNavigate } from 'react-router-dom';
 
 const Login: React.FC = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-
+ 
   const handleLogin = async () => {
     setError('');
 
     try {
+      // Todo:: need to add url to env file
       // Simulate API call with async/await
       const response = await fetch('http://localhost:3000/auth/login', {
         method: 'POST',
@@ -20,7 +23,9 @@ const Login: React.FC = () => {
       });
 
       if (response.ok) {
-        alert('Login successful');
+        console.log(`Login success full`);
+        // Redirect to home page
+        navigate('/');
       } else {
         const data = await response.json();
         setError(data.message || 'Login failed');

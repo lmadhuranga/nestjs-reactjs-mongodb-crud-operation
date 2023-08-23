@@ -27,9 +27,9 @@ export class ServiceService {
   async findAllWithPartners(): Promise<Service[]> {
     const services = await this.serviceRepository.find();
     for (const service of services) {
-      console.log(`service`,service);
+      // console.log(`service`,service);
       service.partner = await this.partnerRepository.findOne({where:{_id:service.partnerId}});
-      console.log(`service.partner`,service.partner);
+      // console.log(`service.partner`,service.partner);
     }
     return services;
   }
