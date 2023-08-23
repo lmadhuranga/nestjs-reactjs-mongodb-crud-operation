@@ -6,11 +6,9 @@ import { PartnerModule } from './partner/partner.module';
 import { ServiceModule } from './service/service.module';
 import mysqlConfig from 'mysql.config';
 import mongodbConfig from 'mongodb.config';
-import { Partner } from './partner/entities/partner.entity';
-import { SubscribeModule } from './subscribe/subscribe.module';    
-import { LogServiceService } from './log-service/log-service.service';
-import { LogService } from './log-service/entities/log-service.entity';
+import { SubscribeModule } from './subscribe/subscribe.module';
 import { LogServiceModule } from './log-service/log-service.module';
+import { StatisticsModule } from './statistics/statistics.module';
 @Module({
   imports: [
     // TypeOrmModule.forRoot(mysqlConfig),
@@ -21,6 +19,7 @@ import { LogServiceModule } from './log-service/log-service.module';
     ServiceModule,
     SubscribeModule,
     LogServiceModule,
+    StatisticsModule,
   ],
   providers: [],
 })

@@ -5,7 +5,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Repository } from 'typeorm';
 import { ObjectId } from 'mongodb';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Subscribe } from './entities/subscribe.entity';
+import { Subscribe } from './subscribe.entity';
 import { PartnerService } from 'src/partner/partner.service';
 import { Partner } from 'src/partner/entities/partner.entity';
 import { CreateUnsubscribeDto } from './dto/create-unsubscribe.dto';
@@ -35,7 +35,6 @@ export class SubscribeService {
     // Make subcription is pending
     const { serviceId, _id } = await this.makePendingSubscription(createSubscribeDto, userId);
 
-    // Send external api end endpoint request 
     const payLoad = {
       subscriptionId: serviceId,
       sub: userId,
@@ -50,7 +49,7 @@ export class SubscribeService {
     if (partnerRes.status === 'OK') {
       const updatedSubscribe = await this.update(_id, { action: 'SUBSCRIBED' });
 
-      // Todo:: add a log to with succsess status 
+      // add a log to with succsess status 
       this.makeLogRequest("SUBSCRIBE", "SUCCESS", userId, _id);
 
       return { status: "OK", data: updatedSubscribe };
@@ -58,7 +57,7 @@ export class SubscribeService {
 
     this.makeLogRequest("SUBSCRIBE", "FAILED", userId, _id);
 
-    // Todo:: add a log to with failed, external api call status 
+    // add a log to with failed, external api call status 
     return { status: 'Failed' };
 
   }
@@ -76,13 +75,13 @@ export class SubscribeService {
   async doUnsubscribe(subscriptionId: string, userId: ObjectId) {
     // Todo:: Check is already send a request  or not 
 
-    // Todo:: add a log to pending 
+    // add a log to pending 
     this.makeLogRequest("UNSUBSCRIBE", "PENDING", userId);
 
     // Make subcription is pending 
     const { serviceId, _id } = await this.makePendingUnsubscription(subscriptionId);
 
-    // // // Send external api end endpoint request 
+    // Send external api end endpoint request 
     const payLoad = {
       subscriptionId: serviceId,
       sub: userId,
@@ -95,15 +94,18 @@ export class SubscribeService {
     const partnerRes = await this.makeExternalSub(payLoad);
 
     if (partnerRes.status === 'OK') {
+      // Update database
       const updatedSubscribe = await this.update(_id, { action: 'UNSUBSCRIBED' });
-      // Todo:: add a log to with succsess status 
+
+      // Log : with succsess status 
       this.makeLogRequest("UNSUBSCRIBE", "SUCCESS", userId, _id);
     
       return { status: "OK", data: updatedSubscribe };
     }
 
-    // // Todo:: add a log to with failed, external api call status 
+    // Log : with failed, external api call status 
     this.makeLogRequest("UNSUBSCRIBE", "FAILED", userId);
+
     return { status: 'Failed' };
 
   }
@@ -146,7 +148,7 @@ export class SubscribeService {
 
   async makeExternalSub(payLoad: any) {
     if (payLoad.msisdn === '') {
-      return { status: 'Failed' }
+      return { status: 'Failed' };
     }
     // jwtToken token
     const jwtToken = this.jwtService.sign(payLoad)
@@ -155,7 +157,7 @@ export class SubscribeService {
      try {
        // Todo:: Make external api call
      } catch (error) {
-       
+       return { status: 'FAILED' }
      } 
     */
 

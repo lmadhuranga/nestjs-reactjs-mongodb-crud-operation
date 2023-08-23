@@ -18,7 +18,7 @@ export class LogServiceService {
     logService.subscribeId = createLogServiceDto.subscribeId;
     logService.action = createLogServiceDto.action;
     logService.status = createLogServiceDto.status;  
-    logService.userId = new ObjectId(createLogServiceDto.userId);  
+    logService.userId = new ObjectId(createLogServiceDto.userId);
     logService.created_at =  new Date();  
     return await this.logServiceRepository.save(logService);
   }
@@ -26,6 +26,10 @@ export class LogServiceService {
 
   findAll() {
     return `This action returns all logService`;
+  }
+
+  async getStatisticData() {
+   return await this.logServiceRepository.findBy({"status" : "SUCCESS"});
   }
 
   findOne(id: number) {
