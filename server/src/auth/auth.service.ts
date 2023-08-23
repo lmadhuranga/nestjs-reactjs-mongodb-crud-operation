@@ -8,7 +8,7 @@ export class AuthService {
     private usersService: UsersService,
     private jwtService: JwtService
   ) {}
-
+  // Todo:: need integrate bcrypt and encode the data
   async signIn(email, password) {
     const user = await this.usersService.findByEmail(email);
     if (user?.password !== password) {
