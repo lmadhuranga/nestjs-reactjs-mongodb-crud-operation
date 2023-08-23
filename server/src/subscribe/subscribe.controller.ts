@@ -15,23 +15,23 @@ export class SubscribeController {
     return this.subscribeService.doSubscribe(createSubscribeDto, sub);
   }
 
-  @Get()
-  findAll() {
-    return this.subscribeService.findAll();
-  }
+  // @Get()
+  // findAll() {
+  //   return this.subscribeService.findAll();
+  // }
 
-  @Get(':id')
-  findOne(@Param('token') token: string) {
+  // @Get(':id')
+  // findOne(@Param('token') token: string) {
     
-  }
+  // }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSubscribeDto: UpdateSubscribeDto) {
-    return this.subscribeService.update(+id, updateSubscribeDto);
-  }
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() updateSubscribeDto: UpdateSubscribeDto) {
+  //   return this.subscribeService.update(+id, updateSubscribeDto);
+  // }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.subscribeService.remove(+id);
-  }
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.subscribeService.remove(+id);
+  // }
 }

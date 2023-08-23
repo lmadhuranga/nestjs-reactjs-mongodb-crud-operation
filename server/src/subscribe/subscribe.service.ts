@@ -18,7 +18,6 @@ export class SubscribeService {
     private readonly logServiceRepository: Repository<LogService>,
     private jwtService: JwtService,
     private logservice: LogServiceService,
-    // private partnerService: PartnerService,
   ) { }
 
   async doSubscribe(createSubscribeDto: CreateSubscribeDto, userId: ObjectId) {
@@ -54,7 +53,7 @@ export class SubscribeService {
     this.logservice.makeLogRequest("SUBSCRIBE", "FAILED", "USER", userId, _id);
 
     // add a log to with failed, external api call status 
-    return { status: 'Failed' };
+    return { status: 'FAILED' };
 
   }
 
@@ -62,7 +61,7 @@ export class SubscribeService {
   async doUnsubscribe(subscriptionId: ObjectId, userId: ObjectId) {
     // Todo:: Check is already send a request  or not 
 
-    // add a log to pending 
+    // Log : add a log to pending 
     this.logservice.makeLogRequest("UNSUBSCRIBE", "PENDING", "USER", userId);
 
     // Make subcription is pending 
@@ -93,7 +92,7 @@ export class SubscribeService {
     // Log : with failed, external api call status 
     this.logservice.makeLogRequest("UNSUBSCRIBE", "FAILED", "USER", userId);
 
-    return { status: 'Failed' };
+    return { status: 'FAILED' };
 
   }
 
@@ -135,7 +134,7 @@ export class SubscribeService {
 
   async makeExternalSub(payLoad: any) {
     if (payLoad.msisdn === '') {
-      return { status: 'Failed' };
+      return { status: 'FAILED' };
     }
     // jwtToken token
     const jwtToken = this.jwtService.sign(payLoad)

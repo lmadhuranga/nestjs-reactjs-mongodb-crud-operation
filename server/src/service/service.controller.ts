@@ -8,10 +8,12 @@ import { AuthGuard } from 'src/auth/auth.guard';
 export class ServiceController {
   constructor(private readonly serviceService: ServiceService) {}
 
-  @Post()
-  create(@Body() createServiceDto: CreateServiceDto) {
-    return this.serviceService.create(createServiceDto);
-  }
+  // @UseGuards(AuthGuard)
+  // @Post()
+  // create(@Body() createServiceDto: CreateServiceDto) {
+  //   return this.serviceService.create(createServiceDto);
+  // }
+
   @UseGuards(AuthGuard)
   @Get()
   findAll() {
@@ -19,18 +21,18 @@ export class ServiceController {
     return this.serviceService.findAllWithPartners();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.serviceService.findOne(+id);
-  }
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   return this.serviceService.findOne(+id);
+  // }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateServiceDto: UpdateServiceDto) {
-    return this.serviceService.update(+id, updateServiceDto);
-  }
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() updateServiceDto: UpdateServiceDto) {
+  //   return this.serviceService.update(+id, updateServiceDto);
+  // }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.serviceService.remove(+id);
-  }
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.serviceService.remove(+id);
+  // }
 }
