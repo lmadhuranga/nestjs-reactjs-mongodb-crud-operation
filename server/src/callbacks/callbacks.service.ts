@@ -6,50 +6,59 @@ import { ObjectId } from 'mongodb';
 import { CreateSubscribeDto } from 'src/subscribe/dto/create-subscribe.dto';
 import { LogServiceService } from 'src/log-service/log-service.service';
 import { SubscribeService } from 'src/subscribe/subscribe.service';
+import { AuthService } from 'src/auth/auth.service';
 
 @Injectable()
 export class CallbacksService {
   constructor(
     private logservice: LogServiceService,
     private subscribeService: SubscribeService,
+    private authService: AuthService,
   ) { }
 
-  async doSubscribe(createSubscribeDto: CreateSubscribeDto, userId: ObjectId) {
+  async doSubscribe(token: string) {
     // Todo:: Check is already send a request  or not 
+    const { sub, subscribeId, action, msisdn } = await this.authService.verify(token);
 
     // Add log record
-    this.logservice.makeLogRequest("SUBSCRIBE", "PENDING", "CALLBACK", new ObjectId(userId));
+    this.logservice.makeLogRequest("SUBSCRIBE", "PENDING", "CALLBACK", new ObjectId(sub));
+    const createSubscribeDto = new CreateSubscribeDto();
+    createSubscribeDto.action = action;
+    createSubscribeDto.subscribeId = subscribeId;
+    createSubscribeDto.msisdn = msisdn;
 
     // Make subcription is pending
-    const { serviceId, _id } = await this.subscribeService.makePendingSubscription(createSubscribeDto, userId);
+    const { serviceId, _id } = await this.subscribeService.makePendingSubscription(createSubscribeDto, sub);
 
     // update the subcription
     const updatedSubscribe = await this.subscribeService.update(_id, { action: 'SUBSCRIBED' });
 
     // add a log to with succsess status
-    this.logservice.makeLogRequest("SUBSCRIBE", "SUCCESS", "CALLBACK", userId, _id);
+    this.logservice.makeLogRequest("SUBSCRIBE", "SUCCESS", "CALLBACK", sub, _id);
 
     return { status: "OK", data: { updatedSubscribe, serviceId } };
   }
 
 
-  async doUnsubscribe(subscriptionId: ObjectId, userId: ObjectId) {
+  async doUnsubscribe(token: string) {
     // Todo:: Check is already send a request  or not 
+    const { sub, subscribeId, action, msisdn } = await this.authService.verify(token);
 
-    // add a log to pending 
-    this.logservice.makeLogRequest("UNSUBSCRIBE", "PENDING", "CALLBACK", userId);
+    // Add log record
+    this.logservice.makeLogRequest("UNSUBSCRIBE", "PENDING", "CALLBACK", new ObjectId(sub));
+ 
+    // Make subcription is pending
+    const { serviceId, _id } = await this.subscribeService.makePendingUnsubscription(subscribeId);
 
-    // Make subcription is pending 
-    const { serviceId, _id } = await this.subscribeService.makePendingUnsubscription(subscriptionId);
+    // update the subcription
+    const updatedUnsubscribe = await this.subscribeService.update(_id, { action: 'UNSUBSCRIBE' });
 
-    // Update database
-    const updatedSubscribe = await this.subscribeService.update(_id, { action: 'UNSUBSCRIBED' });
+    // add a log to with succsess status
+    this.logservice.makeLogRequest("UNSUBSCRIBE", "SUCCESS", "CALLBACK", sub, _id);
 
-    // Log : with succsess status 
-    this.logservice.makeLogRequest("UNSUBSCRIBE", "SUCCESS", "CALLBACK", userId, _id);
-
-    return { status: "OK", data: updatedSubscribe };
+    return { status: "OK", data: { updatedUnsubscribe, serviceId } };
   }
+
 
   findAll() {
     return `This action returns all callbacks`;
