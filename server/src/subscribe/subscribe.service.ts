@@ -52,7 +52,7 @@ export class SubscribeService {
       // add a log to with succsess status 
       this.makeLogRequest("SUBSCRIBE", "SUCCESS", userId, _id);
 
-      return { status: "OK", data: updatedSubscribe };
+      return { status: "OK", data: {updatedSubscribe, serviceId} };
     }
 
     this.makeLogRequest("SUBSCRIBE", "FAILED", userId, _id);

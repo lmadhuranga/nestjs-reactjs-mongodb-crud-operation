@@ -23,6 +23,7 @@ const Login: React.FC = () => {
 
       if (response.ok) {
         const {access_token} = await response.json();
+        // token store in local storage
         localStorage.setItem('token', access_token);
         console.log(`Login success full`);
         // Redirect to home page
