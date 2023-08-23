@@ -7,41 +7,23 @@ import { Repository } from 'typeorm';
 import { User } from 'src/users/user.entity';
 import { Subscribe } from 'src/subscribe/subscribe.entity';
 import { LogService } from 'src/log-service/entities/log-service.entity';
+import { LogServiceService } from 'src/log-service/log-service.service';
 
 @Injectable()
 export class StatisticsService {
-  constructor(
-    @InjectRepository(Statistic)
-    private readonly statisticRepository: Repository<Statistic>,
+  constructor( 
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     @InjectRepository(Subscribe)
-    private readonly logServiceRepository: Repository<LogService>,
-  ) { }
-  create(createStatisticDto: CreateStatisticDto) {
-    return 'This action adds a new statistic';
-  }
-
-  findAll() {
-    return `This action returns all statistics`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} statistic`;
-  }
-
-  update(id: number, updateStatisticDto: UpdateStatisticDto) {
-    return `This action updates a #${id} statistic`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} statistic`;
-  }
+    private readonly logServiceRepository: Repository<LogService>, 
+  ) { } 
 
   async getStatistics() {
     const totalUsers = await this.userRepository.count();
-    const totalSubscriptions = await this.logServiceRepository.count();
-    // const totalSuccessfulSubscriptions = await this.logService.();
+    const totalSubscriptions = await this.logServiceRepository.count(); 
+    const totalSuccessfulSubscriptions = await this.logServiceRepository.count({
+      where: { status: 'SUCCESS', }
+    });
     const totalFailedSubscriptions = await this.logServiceRepository.count({
       where: { status: 'FAILURE', }
     });
@@ -49,7 +31,7 @@ export class StatisticsService {
     return {
       totalUsers,
       totalSubscriptions,
-      // totalSuccessfulSubscriptions,
+      totalSuccessfulSubscriptions,
       totalFailedSubscriptions,
     };
   }
