@@ -135,8 +135,8 @@ export class SubscribeService {
   async makePendingSubscription(createSubscribeDto: CreateSubscribeDto, userId: ObjectId) {
     const subscribe = new Subscribe();
     subscribe.action = "SUBSCRIB-PENDING";
-    subscribe.serviceId = createSubscribeDto.serviceId;
-    subscribe.userId = userId;
+    subscribe.serviceId = new ObjectId(createSubscribeDto.serviceId);
+    subscribe.userId = new ObjectId(userId);
     return await this.subscribesRepository.save(subscribe);
   }
 

@@ -1,6 +1,5 @@
 import { Service } from 'src/service/entities/service.entity';
-import { User } from 'src/users/user.entity';
-import { Column, Entity, JoinColumn, ManyToOne, ObjectIdColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, ObjectIdColumn, OneToMany, OneToOne } from 'typeorm';
 import { ObjectId } from 'mongodb';
 
 @Entity()
@@ -16,5 +15,8 @@ export class Subscribe {
 
     @Column()
     action: string;
- 
+
+    @ManyToOne(() => Service, service => service.subscribes)
+    @JoinColumn({ name: 'serviceId' })
+    service: Service;
 }

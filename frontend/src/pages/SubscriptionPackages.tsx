@@ -20,32 +20,59 @@ const SubscriptionPackages: React.FC = () => {
   }, []);
 
   async function subscribe(serviceId: number) {
-    console.log(`serviceId`,serviceId);
+    console.log(`serviceId`, serviceId);
     try {
       const options: RequestInit = {
-        method:'post',
+        method: 'post',
         body: JSON.stringify({ serviceId })
       };
       const response = await authorizedFetch('http://localhost:3000/subscribe', options);
-      const data:{status:string} = await response.json();
-      if(data.status==='OK') {
+      const data: { status: string } = await response.json();
+      if (data.status === 'OK') {
         alert('Subcribed succesfully')
       }
     } catch (error) {
       console.error('Error fetching packages:', error);
     }
   }
+  async function unsubscribe(subscriptionId: number) { 
+    try {
+      const options: RequestInit = {
+        method: 'post',
+        body: JSON.stringify({ subscriptionId })
+      };
+      const response = await authorizedFetch('http://localhost:3000/unsubscribe', options);
+      const data: { status: string } = await response.json();
+      if (data.status === 'OK') {
+        alert('Unsubcribed succesfully')
+      }
+    } catch (error) {
+      console.error('Error fetching packages:', error);
+    }
+  }
 
-  const buttonClickHandler = (serviceId: number) => {
+  const subBtnClickHandler = (serviceId: number) => {
     subscribe(serviceId)
   }
+
+  const unsubBtnClickHandler = (serviceId: number) => {
+    unsubscribe(serviceId)
+  }
+
+  const buttons = (id: number) => (
+    <>
+      <button onClick={(e) => subBtnClickHandler(id)}>Sub</button>
+      < button onClick={(e) => unsubBtnClickHandler(id)}> Unsub</button >
+    </>
+  )
+
 
   return (
     <div>
       <h2>Subscription Packages</h2>
       <ul>
         {packages.map((subscriptionPackage) => (
-          <li key={subscriptionPackage._id} > {subscriptionPackage?.name} <button onClick={(e) => buttonClickHandler(subscriptionPackage._id)}>Sub</button> </li>
+          <li key={subscriptionPackage._id} > {subscriptionPackage?.name} {buttons(subscriptionPackage._id)} </li>
         ))}
       </ul>
     </div>
