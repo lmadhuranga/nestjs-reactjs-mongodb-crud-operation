@@ -6,15 +6,17 @@ import { AuthController } from './auth.controller';
 import { jwtConstants } from './constants';
 import { AuthGuard } from './auth.guard';
 import { APP_GUARD } from '@nestjs/core';
+import * as fs from 'fs';
 
 @Module({
   imports: [
     UsersModule,
-    JwtModule.register({
-      global: true,
-      secret: jwtConstants.secret, // Todo:: need to integrate the RSA 256 key with private keys
-      signOptions: { expiresIn: '1d' }, 
-    }),
+    // JwtModule.register({
+    //   global: true,
+    //   secret: jwtConstants.secret, // Todo:: need to integrate the RSA 256 key with private keys
+    //   signOptions: { expiresIn: '1d' }, 
+    // }),
+    
   ],
   providers: [AuthService],
   controllers: [AuthController],
