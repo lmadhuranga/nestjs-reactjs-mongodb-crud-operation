@@ -1,6 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -10,8 +11,11 @@ export class AuthService {
   ) {}
   // Todo:: need integrate bcrypt and encode the data
   async signIn(email, password) {
+    // const hash = await bcrypt.hash(password, 10);
+    // console.log(`hash`,hash);
     const user = await this.usersService.findByEmail(email);
-    if (user?.password !== password) {
+    const isMatch = await bcrypt.compare(password, user?.password);
+    if (!isMatch) {
       throw new UnauthorizedException();
     }
     const payload = { sub: user.id, username: user.email };
