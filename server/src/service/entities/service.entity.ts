@@ -23,5 +23,5 @@ export class Service {
   partner: Partner;
 
   @OneToMany(() => Subscribe, subscribe => subscribe.service)
-  subscribes: Subscribe;
+  subscribes: Subscribe[];
 }

@@ -31,7 +31,7 @@ export class ServiceService {
     const services = await this.serviceRepository.find();
     for (const service of services) {
       service.partner = await this.partnerRepository.findOne({ where: { _id: service.partnerId } });
-      service.subscribes = await this.subscribeRepository.findOne({ where: { serviceId: service._id } });
+      service.subscribes = await this.subscribeRepository.find({ where: { serviceId: new ObjectId(service._id) } });
     }
     return services;
   }

@@ -19,7 +19,6 @@ export class PartnerService {
 
   findOne(nId: string) {
     const id = new ObjectId(nId);
-    // console.log(`id`, id);
     this.partnerRepository.findOne({ where:{_id:id} })
       .then(partner => {
         console.log(partner); // Here you can work with the partner object

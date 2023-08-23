@@ -24,7 +24,7 @@ const SubscriptionPackages: React.FC = () => {
     try {
       const options: RequestInit = {
         method: 'post',
-        body: JSON.stringify({ serviceId })
+        body: JSON.stringify({ serviceId, })
       };
       const response = await authorizedFetch('http://localhost:3000/subscribe', options);
       const data: { status: string } = await response.json();
@@ -35,9 +35,10 @@ const SubscriptionPackages: React.FC = () => {
       console.error('Error fetching packages:', error);
     }
   }
-  async function unsubscribe(subscriptionId: number) { 
+
+  async function unsubscribe(subscriptionId: number) {
     try {
-      const options: RequestInit = {
+      const options: RequestInit = { 
         method: 'post',
         body: JSON.stringify({ subscriptionId })
       };

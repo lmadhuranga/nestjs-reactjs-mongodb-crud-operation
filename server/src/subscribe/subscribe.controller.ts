@@ -10,7 +10,7 @@ export class SubscribeController {
 
   @UseGuards(AuthGuard)
   @Post()
-  create(@Body() createSubscribeDto: CreateSubscribeDto, @Request() req) {
+  create(@Body() createSubscribeDto: CreateSubscribeDto, @Request() req) {  
     const { user: { sub } } = req;
     return this.subscribeService.doSubscribe(createSubscribeDto, sub);
   }
