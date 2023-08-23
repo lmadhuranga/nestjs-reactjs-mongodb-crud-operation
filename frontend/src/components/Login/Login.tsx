@@ -25,7 +25,7 @@ const Login: React.FC = () => {
       if (response.ok) {
         console.log(`Login success full`);
         // Redirect to home page
-        navigate('/');
+        navigate('/services');
       } else {
         const data = await response.json();
         setError(data.message || 'Login failed');

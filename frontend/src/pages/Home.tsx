@@ -3,6 +3,7 @@ import React from 'react';
 const Home: React.FC = () => {
   return (
     <div>
+      <a href="/services">Services</a>
       <h2>Welcome to the Home Page</h2>
     </div>
   );
