@@ -86,7 +86,7 @@ export class SubscribeService {
       // Log : with succsess status 
       this.logservice.makeLogRequest("UNSUBSCRIBE", "SUCCESS", "USER", userId, _id);
 
-      return { status: "OK", data: updatedSubscribe };
+      return { status: "OK", data: { updatedSubscribe } };
     }
 
     // Log : with failed, external api call status 

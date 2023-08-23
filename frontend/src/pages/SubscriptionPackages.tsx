@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import PackageType from '../interfaces/PackageType';
 import authorizedFetch from '../helpers/fetchWrapper';
+import { useNavigate } from 'react-router';
 
 const SubscriptionPackages: React.FC = () => {
   const [packages, setPackages] = useState<PackageType[]>([]);
-
+  const navigate = useNavigate();
   useEffect(() => {
     async function fetchPackages() {
       try {
@@ -12,6 +13,7 @@ const SubscriptionPackages: React.FC = () => {
         const data = await response.json();
         setPackages(data);
       } catch (error) {
+        navigate('/login')
         console.error('Error fetching packages:', error);
       }
     }
@@ -38,7 +40,7 @@ const SubscriptionPackages: React.FC = () => {
 
   async function unsubscribe(subscriptionId: number) {
     try {
-      const options: RequestInit = { 
+      const options: RequestInit = {
         method: 'post',
         body: JSON.stringify({ subscriptionId })
       };
@@ -59,22 +61,28 @@ const SubscriptionPackages: React.FC = () => {
   const unsubBtnClickHandler = (serviceId: number) => {
     unsubscribe(serviceId)
   }
-
   const buttons = (id: number) => (
-    <>
-      <button onClick={(e) => subBtnClickHandler(id)}>Sub</button> | <button onClick={(e) => unsubBtnClickHandler(id)}> Unsub</button >
-    </>
-  )
-
-
+    <div className="mt-2">
+      <button
+        className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded mr-2"
+        onClick={(e) => subBtnClickHandler(id)} > Sub </button>
+      <button
+        className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
+        onClick={(e) => unsubBtnClickHandler(id)} > Unsub </button>
+    </div>
+  );
   return (
-    <div>
-      <h2>Subscription Packages</h2>
-      <ul>
+    <div className="bg-gray-100 py-8">
+      <h2 className="text-2xl font-semibold text-center mb-4">Subscription Packages</h2>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 px-4">
         {packages.map((subscriptionPackage) => (
-          <li key={subscriptionPackage._id} > {subscriptionPackage?.name} {buttons(subscriptionPackage._id)} </li>
+          <div key={subscriptionPackage._id} className="bg-white rounded shadow p-4">
+            <h3 className="text-lg font-semibold mb-2">{subscriptionPackage?.name}</h3>
+            <p className="text-gray-500">{subscriptionPackage?.name}</p>
+            {buttons(subscriptionPackage._id)}
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
