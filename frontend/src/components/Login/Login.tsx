@@ -13,7 +13,6 @@ const Login: React.FC = () => {
 
     try {
       // Todo:: need to add url to env file
-      // Simulate API call with async/await
       const response = await fetch('http://localhost:3000/auth/login', {
         method: 'POST',
         headers: {
@@ -23,6 +22,8 @@ const Login: React.FC = () => {
       });
 
       if (response.ok) {
+        const {access_token} = await response.json();
+        localStorage.setItem('token', access_token);
         console.log(`Login success full`);
         // Redirect to home page
         navigate('/services');

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PackageType from '../interfaces/PackageType';
+import authorizedFetch from '../helpers/fetchWrapper';
 
 const SubscriptionPackages: React.FC = () => {
   const [packages, setPackages] = useState<PackageType[]>([]);
@@ -7,7 +8,7 @@ const SubscriptionPackages: React.FC = () => {
   useEffect(() => {
     async function fetchPackages() {
       try {
-        const response = await fetch('http://localhost:3000/service');
+        const response = await authorizedFetch('http://localhost:3000/service');
         const data = await response.json();
         setPackages(data);
       } catch (error) {
