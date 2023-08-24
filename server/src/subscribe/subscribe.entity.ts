@@ -16,6 +16,13 @@ export class Subscribe {
     @Column()
     action: string;
 
+
+    @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+    created: Date;
+
+    @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
+    lastUpdate: Date;
+
     @ManyToOne(() => Service, service => service.subscribes)
     @JoinColumn({ name: 'serviceId' })
     service: Service;
