@@ -3,6 +3,7 @@ import { SubscribeService } from './subscribe.service';
 import { CreateSubscribeDto } from './dto/create-subscribe.dto';
 import { UpdateSubscribeDto } from './dto/update-subscribe.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { ObjectId } from 'mongodb';
 
 @Controller('subscribe')
 export class SubscribeController {
@@ -12,7 +13,7 @@ export class SubscribeController {
   @Post()
   create(@Body() createSubscribeDto: CreateSubscribeDto, @Request() req) {  
     const { user: { sub } } = req;
-    return this.subscribeService.doSubscribe(createSubscribeDto, sub);
+    return this.subscribeService.doSubscribe(createSubscribeDto, new ObjectId(sub));
   }
 
   // @Get()

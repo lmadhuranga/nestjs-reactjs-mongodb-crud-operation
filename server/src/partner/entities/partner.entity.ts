@@ -13,6 +13,12 @@ export class Partner {
   @Column()
   description: string;
 
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  created: Date;
+
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
+  lastUpdate: Date;
+
   @OneToMany(() => Service, service => service.partner)
   services: Service[];
 }

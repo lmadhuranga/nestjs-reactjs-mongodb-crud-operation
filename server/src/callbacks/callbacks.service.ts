@@ -36,7 +36,7 @@ export class CallbacksService {
     // add a log to with succsess status
     this.logservice.makeLogRequest("SUBSCRIBE", "SUCCESS", "CALLBACK", sub, _id);
 
-    return { status: "OK", data: { updatedSubscribe, serviceId } };
+    return { status: "OK", data: { ...updatedSubscribe, ...serviceId } };
   }
 
 
@@ -56,7 +56,7 @@ export class CallbacksService {
     // add a log to with succsess status
     this.logservice.makeLogRequest("UNSUBSCRIBE", "SUCCESS", "CALLBACK", sub, _id);
 
-    return { status: "OK", data: { updatedUnsubscribe, serviceId } };
+    return { status: "OK", data: { ...updatedUnsubscribe, ...serviceId } };
   }
 
 

@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateSubscribeDto } from './dto/create-subscribe.dto';
 import { UpdateSubscribeDto } from './dto/update-subscribe.dto';
 import { JwtService } from '@nestjs/jwt';
@@ -21,13 +21,29 @@ export class SubscribeService {
   ) { }
 
   async doSubscribe(createSubscribeDto: CreateSubscribeDto, userId: ObjectId) {
-    // Todo:: Check is already send a request  or not 
+    // Check is already send a request  or not 
+    const { serviceId } = createSubscribeDto;
+
+    const subscribedData = await this.subscribesRepository.findOne({
+      where: {
+        action: "SUBSCRIBED",
+        userId,
+        serviceId: new ObjectId(serviceId)
+      }
+    });
+
+    if (subscribedData !== null) {
+      throw new ConflictException({
+        status: 'Already subscribed',
+        data: { ...subscribedData },
+      });
+    }
 
     // Add log record
     this.logservice.makeLogRequest("SUBSCRIBE", "PENDING", "USER", userId);
 
     // Make subcription is pending
-    const { serviceId, _id } = await this.makePendingSubscription(createSubscribeDto, userId);
+    const { _id } = await this.makePendingSubscription(createSubscribeDto, userId);
 
     const payLoad = {
       subscriptionId: serviceId,
@@ -46,7 +62,7 @@ export class SubscribeService {
       // add a log to with succsess status 
       this.logservice.makeLogRequest("SUBSCRIBE", "SUCCESS", "USER", userId, _id);
 
-      return { status: "OK", data: { updatedSubscribe, serviceId } };
+      return { status: "OK", data: { ...updatedSubscribe, ...serviceId } };
     }
 
     // add a log to with FAILED status 
@@ -86,7 +102,7 @@ export class SubscribeService {
       // Log : with succsess status 
       this.logservice.makeLogRequest("UNSUBSCRIBE", "SUCCESS", "USER", userId, _id);
 
-      return { status: "OK", data: { updatedSubscribe } };
+      return { status: "OK", data: { ...updatedSubscribe } };
     }
 
     // Log : with failed, external api call status 

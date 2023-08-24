@@ -21,10 +21,11 @@ export class LogService {
     @Column()
     userType: string;
 
-    @Column()
-    log_details: string;
+    @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+    created: Date;
 
-    @Column()
-    created_at: Date;
+    @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
+    lastUpdate: Date;
+
 
 }
