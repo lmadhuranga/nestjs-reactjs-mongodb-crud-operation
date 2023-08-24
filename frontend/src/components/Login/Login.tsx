@@ -8,9 +8,15 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
  
-  const handleLogin = async () => {
+  const handleLogin = async () => { 
     setError('');
 
+    // Simple client-side validation
+    if (!email || !password) {
+      setError('Please fill in all fields.');
+      return;
+    }
+    
     try {
       // Todo:: need to add url to env file
       const response = await fetch('http://localhost:3000/auth/login', {

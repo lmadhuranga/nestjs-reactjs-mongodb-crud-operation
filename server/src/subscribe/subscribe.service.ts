@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateSubscribeDto } from './dto/create-subscribe.dto';
 import { UpdateSubscribeDto } from './dto/update-subscribe.dto';
 import { JwtService } from '@nestjs/jwt';
@@ -62,14 +62,14 @@ export class SubscribeService {
       // add a log to with succsess status 
       this.logservice.makeLogRequest("SUBSCRIBE", "SUCCESS", "USER", userId, _id);
 
-      return { status: "OK", data: { ...updatedSubscribe, ...serviceId } };
+      return { statusCode: HttpStatus.CREATED, message: "Subscribed successfully", data: { ...updatedSubscribe, ...serviceId } };
     }
 
     // add a log to with FAILED status 
     this.logservice.makeLogRequest("SUBSCRIBE", "FAILED", "USER", userId, _id);
 
     // add a log to with failed, external api call status 
-    return { status: 'FAILED' };
+    return { statusCode: HttpStatus.INTERNAL_SERVER_ERROR, message: "Subscription failed" };
 
   }
 
@@ -97,18 +97,18 @@ export class SubscribeService {
 
     if (partnerRes.status === 'OK') {
       // Update database
-      const updatedSubscribe = await this.update(_id, { action: 'UNSUBSCRIBED' });
+      const updatedUnsubscribe = await this.update(_id, { action: 'UNSUBSCRIBED' });
 
       // Log : with succsess status 
       this.logservice.makeLogRequest("UNSUBSCRIBE", "SUCCESS", "USER", userId, _id);
 
-      return { status: "OK", data: { ...updatedSubscribe } };
+      return { statusCode: HttpStatus.OK, message: "Unsubscribed successfully", data: { ...updatedUnsubscribe } };
     }
 
     // Log : with failed, external api call status 
     this.logservice.makeLogRequest("UNSUBSCRIBE", "FAILED", "USER", userId);
 
-    return { status: 'FAILED' };
+    return { statusCode: HttpStatus.INTERNAL_SERVER_ERROR, message: "Unsubscribed failed" };
 
   }
 
@@ -141,7 +141,7 @@ export class SubscribeService {
     subscribe.userId = new ObjectId(userId);
     return await this.subscribesRepository.save(subscribe);
   }
-
+  
   async makePendingUnsubscription(subscribeId: ObjectId) {
     const subscribeData = new Subscribe();
     subscribeData.action = 'UNSUBSCRIB-PENDING';
@@ -154,7 +154,7 @@ export class SubscribeService {
     }
     // jwtToken token
     const jwtToken = this.jwtService.sign(payLoad)
-
+    console.log(`external api call`,);
     /* 
      try {
        // Todo:: Make external api call
