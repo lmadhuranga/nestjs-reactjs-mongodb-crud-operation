@@ -1,65 +1,74 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { MemoryRouter, Router } from 'react-router-dom';
+import { render, fireEvent, waitFor, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import Login from './Login';
-import { createMemoryHistory } from 'history';
+import { act } from 'react-dom/test-utils';
 
 describe('Login', () => {
-    // fit('renders login form and handles successful login', async () => {
-
-    //     (global as any).fetch = jest.fn().mockResolvedValue({
-    //         status: 200,
-    //         ok: true,
-    //         json: async () => ({ access_token: 'mockAccessToken' }),
-    //     });
-    //     const navigateMock = jest.fn();
-
-    //     render(
-    //         <MemoryRouter>
-    //             <Login navigate={navigateMock} />
-    //         </MemoryRouter>
-    //     );
-
-    //     const emailInput = screen.getByLabelText('Email:');
-    //     const passwordInput = screen.getByLabelText('Password:');
-    //     const loginButton = screen.getByText('Login');
-
-    //     fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
-    //     fireEvent.change(passwordInput, { target: { value: 'password123' } });
-
-    //     fireEvent.click(loginButton);
-
-    //     await waitFor(() => {
-    //         expect(navigateMock).toHaveBeenCalledWith('/services'); 
-    //     });
-    // });
-
-    it('handles login failure', async () => {
-
-        (global as any).fetch = jest.fn().mockResolvedValue({
-            status: 401,
-            ok: false,
-            json: async () => ({ message: 'Invalid credentials' }),
-        });
-
-        render(
+    it('displays error message when submitting with empty fields', async () => {
+        const { getByText } = render(
             <MemoryRouter>
                 <Login />
             </MemoryRouter>
         );
 
-
-        const emailInput = screen.getByLabelText('Email:');
-        const passwordInput = screen.getByLabelText('Password:');
-        const loginButton = screen.getByText('Login');
-
-        fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
-        fireEvent.change(passwordInput, { target: { value: 'password123' } });
-
+        const loginButton = getByText('Login');
         fireEvent.click(loginButton);
 
         await waitFor(() => {
-            expect(screen.getByText('Invalid credentials')).toBeInTheDocument();
+            const errorMessage = getByText('Please fill in all fields.');
+            expect(errorMessage).toBeInTheDocument();
         });
+    });
+
+    it('displays error message when login fails', async () => {
+
+        global.fetch = jest.fn().mockResolvedValue({
+            ok: false,
+            json: async () => ({ message: 'Login failed' }),
+        });
+
+        const { getByText, getByLabelText } = render(
+            <MemoryRouter>
+                <Login />
+            </MemoryRouter>
+        );
+
+        const emailInput = getByLabelText('Email:');
+        const passwordInput = getByLabelText('Password:');
+        const loginButton = getByText('Login');
+
+        fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
+        fireEvent.change(passwordInput, { target: { value: 'password' } });
+        fireEvent.click(loginButton);
+
+        await waitFor(() => {
+            const errorMessage = getByText('Login failed');
+            expect(errorMessage).toBeInTheDocument();
+        });
+    });
+
+    it('navigates to /services after successful login', async () => {
+        const mockNavigate = jest.fn();
+        jest.mock('react-router-dom', () => ({
+            ...jest.requireActual('react-router-dom'),
+            useNavigate: () => mockNavigate,
+        }));
+
+        const mockSetItem = jest.spyOn(window.localStorage.__proto__, 'setItem');
+
+        render(
+            <MemoryRouter> { }
+                <Login />
+            </MemoryRouter>
+        );
+
+        fireEvent.change(screen.getByLabelText('Email:'), { target: { value: 'test@example.com' } });
+        fireEvent.change(screen.getByLabelText('Password:'), { target: { value: 'password' } });
+        fireEvent.click(screen.getByText('Login'));
+
+
+        expect(mockSetItem).toHaveBeenCalledWith('token', 'fakeToken');
+        expect(mockNavigate).toHaveBeenCalledWith('/services');
     });
 });

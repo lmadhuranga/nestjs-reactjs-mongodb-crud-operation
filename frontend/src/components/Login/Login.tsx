@@ -10,8 +10,7 @@ const Login: React.FC = () => {
  
   const handleLogin = async () => { 
     setError('');
-
-    // Simple client-side validation
+ 
     if (!email || !password) {
       setError('Please fill in all fields.');
       return;
@@ -31,7 +30,7 @@ const Login: React.FC = () => {
         const {access_token} = await response.json();
         // token store in local storage
         localStorage.setItem('token', access_token);
-        // console.log(`Login success full`);
+        console.log(`Login success full`, access_token);
         // Redirect to home page
         navigate('/services');
       } else {
