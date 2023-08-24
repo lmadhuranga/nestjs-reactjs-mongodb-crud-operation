@@ -4,12 +4,15 @@ import authorizedFetch from '../helpers/fetchWrapper';
 import { useNavigate } from 'react-router';
 import NavBar from '../components/NavBar';
 
-const SubscriptionPackages: React.FC = () => {
+const SubscriptionPackages: React.FC<{ showToast: (toast: { type: 'success' | 'error'; message: string }) => void }> = ({
+  showToast,
+}) => {
   const [packages, setPackages] = useState<PackageType[]>([]);
   const [isUpdate, setIsUpdate] = useState(1);
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log(`useEffect triggerd`);
     async function fetchPackages() {
       try {
         // Todo:: Need add pagination 
@@ -33,15 +36,12 @@ const SubscriptionPackages: React.FC = () => {
       };
       const { response, status } = await authorizedFetch('http://localhost:3000/subscribe', options);
       if (status === 409) {
-        alert('Already subscribed');
-      } else if (response.ok) {
-        const data: { status: string } = await response.json();
-        if (data.status === 'OK') {
-          setIsUpdate(Math.random());
-          alert('Subscribed successfully');
-        }
+        showToast({ type: 'error', message: 'Already subscribed' });
+      } else if (status === 201) {
+        setIsUpdate(Math.random());
+        showToast({ type: 'success', message: 'Subscribed successfully' });
       } else {
-        alert('Subscription failed');
+        showToast({ type: 'error', message: 'Subscription failed' });
       }
     } catch (error) {
       console.error('Error fetching packages:', error);
@@ -57,15 +57,12 @@ const SubscriptionPackages: React.FC = () => {
       };
       const { response, status } = await authorizedFetch('http://localhost:3000/unsubscribe', options);
       if (status === 409) {
-        alert('Already unsubscribed');
-      } else if (response.ok) {
-        const data: { status: string } = await response.json();
-        if (data.status === 'OK') {
-          setIsUpdate(Math.random());
-          alert('Unsubscribed successfully');
-        }
+        showToast({ type: 'error', message: 'Already unsubscribed' });
+      } else if (status === 201) {
+        setIsUpdate(Math.random());
+        showToast({ type: 'success', message: 'Unsubscribed successfully' });
       } else {
-        alert('Unsubscribed failed');
+        showToast({ type: 'error', message: 'Unsubscribed failed' });
       }
     } catch (error) {
       console.error('Error fetching packages:', error);
