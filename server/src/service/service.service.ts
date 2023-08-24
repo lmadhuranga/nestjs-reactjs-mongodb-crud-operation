@@ -19,9 +19,9 @@ export class ServiceService {
     private readonly subscribeRepository: Repository<Subscribe>,
   ) { }
 
-  create(createServiceDto: CreateServiceDto) {
-    return 'This action adds a new service';
-  }
+  // create(createServiceDto: CreateServiceDto) {
+  //   return 'This action adds a new service';
+  // }
 
   findAll() {
     return this.serviceRepository.find();
@@ -41,11 +41,11 @@ export class ServiceService {
     return this.serviceRepository.findOneBy({ _id: id })
   }
 
-  update(id: number, updateServiceDto: UpdateServiceDto) {
-    return `This action updates a #${id} service`;
-  }
+  // update(id: number, updateServiceDto: UpdateServiceDto) {
+  //   return `This action updates a #${id} service`;
+  // }
 
-  remove(id: number) {
-    return `This action removes a #${id} service`;
-  }
+  // remove(id: number) {
+  //   return `This action removes a #${id} service`;
+  // }
 }

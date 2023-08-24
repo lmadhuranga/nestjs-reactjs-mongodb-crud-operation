@@ -19,8 +19,7 @@ export class CallbacksService {
   async doSubscribe(token: string) {
     // Todo:: Check is already send a request  or not 
     const { sub, subscribeId, action, msisdn } = await this.authService.verify(token);
-
-    // Add log record
+ 
     this.logservice.makeLogRequest("SUBSCRIBE", "PENDING", "CALLBACK", new ObjectId(sub));
     const createSubscribeDto = new CreateSubscribeDto();
     createSubscribeDto.action = action;
@@ -57,22 +56,5 @@ export class CallbacksService {
     this.logservice.makeLogRequest("UNSUBSCRIBE", "SUCCESS", "CALLBACK", sub, _id);
 
     return { status: "OK", data: { ...updatedUnsubscribe, ...serviceId } };
-  }
-
-
-  findAll() {
-    return `This action returns all callbacks`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} callback`;
-  }
-
-  update(id: number, updateCallbackDto: UpdateCallbackDto) {
-    return `This action updates a #${id} callback`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} callback`;
   }
 }

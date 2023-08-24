@@ -28,9 +28,4 @@ export class PartnerService {
       });
     // return this.partnerRepository.findOne({ where: { id: id } });
   }
-
-  makeExternalSub() {
-
-  }
-
 }

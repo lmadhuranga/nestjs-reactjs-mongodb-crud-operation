@@ -11,15 +11,23 @@ export class AuthService {
     private usersService: UsersService,
     private jwtService: JwtService
   ) {}
-  // Todo:: need integrate bcrypt and encode the data
+
   async signIn(email, password) {
+    if (!email || !password) {
+      throw new UnauthorizedException('Please provide both email and password.');
+    }
     // const hash = await bcrypt.hash(password, 10);
     // console.log(`hash`,hash);
     const user = await this.usersService.findByEmail(email);
+    if (!user) {
+      throw new UnauthorizedException('Invalid credentials.');
+    }
+
     const isMatch = await bcrypt.compare(password, user?.password);
     if (!isMatch) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Invalid credentials.');
     }
+    
     const payload = { sub: user.id, email: user.email,  };
     return {
       access_token: await this.jwtService.signAsync(payload),
