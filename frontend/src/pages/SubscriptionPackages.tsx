@@ -12,12 +12,12 @@ const SubscriptionPackages: React.FC<{ showToast: (toast: { type: 'success' | 'e
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(`useEffect triggerd`);
     async function fetchPackages() {
       try {
         // Todo:: Need add pagination 
         const { response, status } = await authorizedFetch('http://localhost:3000/service');
         const data = await response.json();
+        console.log(`fetch services `, data);
         setPackages(data);
       } catch (error) {
         navigate('/login')

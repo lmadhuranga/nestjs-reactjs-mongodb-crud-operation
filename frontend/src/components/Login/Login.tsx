@@ -31,7 +31,7 @@ const Login: React.FC = () => {
         const {access_token} = await response.json();
         // token store in local storage
         localStorage.setItem('token', access_token);
-        console.log(`Login success full`);
+        // console.log(`Login success full`);
         // Redirect to home page
         navigate('/services');
       } else {
@@ -49,17 +49,19 @@ const Login: React.FC = () => {
         <h2 className="text-2xl font-semibold mb-6">Login Page</h2>
         {error && <p className="text-red-500 mb-4">{error}</p>}
         <div className="mb-4">
-          <label className="block text-sm font-medium mb-1">Email:</label>
+          <label className="block text-sm font-medium mb-1" htmlFor="email">Email:</label>
           <input
             type="email"
+            id="email"
             className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div className="mb-6">
-          <label className="block text-sm font-medium mb-1">Password:</label>
+          <label className="block text-sm font-medium mb-1" htmlFor='password'>Password:</label>
           <input
+            id="password"
             type="password"
             className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
             value={password}
