@@ -1,0 +1,21 @@
+export enum SubscriptionStatus {
+    SUBSCRIBED = 'SUBSCRIBED',
+    SUBSCRIBE = 'SUBSCRIBE',
+    PENDING = 'PENDING',
+    UNSUBSCRIBE = 'UNSUBSCRIBE',
+    SUBSCRIBPENDING = 'SUBSCRIBPENDING',
+    UNSUBSCRIBPENDING = 'UNSUBSCRIBPENDING',
+    UNSUBSCRIBED = 'UNSUBSCRIBED',
+  }
+  
+  export enum UserRole {
+    USER = 'USER',
+    CALLBACK = 'CALLBACK',
+    ADMIN = 'ADMIN',
+  }
+  
+  export enum statusCode {
+    PENDING = 'PENDING',
+    SUCCESS = 'SUCCESS',
+    FAILED = 'FAILED',
+  }

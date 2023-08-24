@@ -8,6 +8,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Subscribe } from './subscribe.entity';
 import { LogService } from 'src/log-service/entities/log-service.entity';
 import { LogServiceService } from 'src/log-service/log-service.service';
+import { SubscriptionStatus, UserRole, statusCode } from 'src/subscirbes.enums'; // Import the enums
+
 
 @Injectable()
 export class SubscribeService {
@@ -26,7 +28,7 @@ export class SubscribeService {
 
     const subscribedData = await this.subscribesRepository.findOne({
       where: {
-        action: "SUBSCRIBED",
+        action: SubscriptionStatus.SUBSCRIBED,
         userId,
         serviceId: new ObjectId(serviceId)
       }
@@ -40,7 +42,7 @@ export class SubscribeService {
     }
 
     // Add log record
-    this.logservice.makeLogRequest("SUBSCRIBE", "PENDING", "USER", userId);
+    this.logservice.makeLogRequest(SubscriptionStatus.SUBSCRIBE, statusCode.PENDING, UserRole.USER, userId);
 
     // Make subcription is pending
     const { _id } = await this.makePendingSubscription(createSubscribeDto, userId);
@@ -49,7 +51,7 @@ export class SubscribeService {
       subscriptionId: serviceId,
       sub: userId,
       subscribeId: _id,
-      action: "SUBSCRIBE",
+      action: SubscriptionStatus.SUBSCRIBE,
       msisdn: '12345'
     }
 
@@ -57,16 +59,16 @@ export class SubscribeService {
     const partnerRes = await this.makeExternalSub(payLoad);
 
     if (partnerRes.status === 'OK') {
-      const updatedSubscribe = await this.update(_id, { action: 'SUBSCRIBED' });
+      const updatedSubscribe = await this.update(_id, { action: SubscriptionStatus.SUBSCRIBED });
 
       // add a log to with succsess status 
-      this.logservice.makeLogRequest("SUBSCRIBE", "SUCCESS", "USER", userId, _id);
+      this.logservice.makeLogRequest(SubscriptionStatus.SUBSCRIBED, statusCode.SUCCESS, UserRole.USER, userId, _id);
 
-      return { statusCode: HttpStatus.CREATED, message: "Subscribed successfully", data: { ...updatedSubscribe, ...serviceId } };
+      return { statusCode: HttpStatus.CREATED, message: "Subscribed successfully", data: { ...updatedSubscribe, serviceId } };
     }
 
     // add a log to with FAILED status 
-    this.logservice.makeLogRequest("SUBSCRIBE", "FAILED", "USER", userId, _id);
+    this.logservice.makeLogRequest(SubscriptionStatus.SUBSCRIBE, "FAILED", UserRole.USER, userId, _id);
 
     // add a log to with failed, external api call status 
     return { statusCode: HttpStatus.INTERNAL_SERVER_ERROR, message: "Subscription failed" };
@@ -78,7 +80,7 @@ export class SubscribeService {
     // Todo:: Check is already send a request  or not 
 
     // Log : add a log to pending 
-    this.logservice.makeLogRequest("UNSUBSCRIBE", "PENDING", "USER", userId);
+    this.logservice.makeLogRequest(SubscriptionStatus.UNSUBSCRIBE, statusCode.PENDING, UserRole.USER, userId);
 
     // Make subcription is pending 
     const { serviceId, _id } = await this.makePendingUnsubscription(subscriptionId);
@@ -88,7 +90,7 @@ export class SubscribeService {
       subscriptionId: serviceId,
       sub: userId,
       subscribeId: _id,
-      action: "UNSUBSCRIBE",
+      action: SubscriptionStatus.UNSUBSCRIBE,
       msisdn: '12345'
     }
 
@@ -97,29 +99,21 @@ export class SubscribeService {
 
     if (partnerRes.status === 'OK') {
       // Update database
-      const updatedUnsubscribe = await this.update(_id, { action: 'UNSUBSCRIBED' });
+      const updatedUnsubscribe = await this.update(_id, { action: SubscriptionStatus.UNSUBSCRIBED });
 
       // Log : with succsess status 
-      this.logservice.makeLogRequest("UNSUBSCRIBE", "SUCCESS", "USER", userId, _id);
+      this.logservice.makeLogRequest("UNSUBSCRIBE", statusCode.SUCCESS, UserRole.USER, userId, _id);
 
       return { statusCode: HttpStatus.OK, message: "Unsubscribed successfully", data: { ...updatedUnsubscribe } };
     }
 
     // Log : with failed, external api call status 
-    this.logservice.makeLogRequest("UNSUBSCRIBE", "FAILED", "USER", userId);
+    this.logservice.makeLogRequest(SubscriptionStatus.UNSUBSCRIBE, statusCode.FAILED, UserRole.CALLBACK, userId);
 
     return { statusCode: HttpStatus.INTERNAL_SERVER_ERROR, message: "Unsubscribed failed" };
 
   }
-
-  findAll() {
-    return `This action returns all subscribe`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} subscribe`;
-  }
-
+  
   async update(id: any, updateSubscribeDto: UpdateSubscribeDto) {
     const subscribeId = new ObjectId(id);
     const subscribeM = await this.subscribesRepository.findOne({ where: { _id: subscribeId } });
@@ -128,15 +122,11 @@ export class SubscribeService {
     }
     subscribeM.action = updateSubscribeDto.action;
     return this.subscribesRepository.save(subscribeM)
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} subscribe`;
-  }
+  } 
 
   async makePendingSubscription(createSubscribeDto: CreateSubscribeDto, userId: ObjectId) {
     const subscribe = new Subscribe();
-    subscribe.action = "SUBSCRIB-PENDING";
+    subscribe.action = SubscriptionStatus.SUBSCRIBPENDING;
     subscribe.serviceId = new ObjectId(createSubscribeDto.serviceId);
     subscribe.userId = new ObjectId(userId);
     return await this.subscribesRepository.save(subscribe);
@@ -144,13 +134,13 @@ export class SubscribeService {
   
   async makePendingUnsubscription(subscribeId: ObjectId) {
     const subscribeData = new Subscribe();
-    subscribeData.action = 'UNSUBSCRIB-PENDING';
+    subscribeData.action = SubscriptionStatus.UNSUBSCRIBPENDING;
     return this.update(subscribeId, subscribeData);
   }
 
   async makeExternalSub(payLoad: any) {
     if (payLoad.msisdn === '') {
-      return { status: 'FAILED' };
+      return { status: statusCode.FAILED };
     }
     // jwtToken token
     const jwtToken = this.jwtService.sign(payLoad)
