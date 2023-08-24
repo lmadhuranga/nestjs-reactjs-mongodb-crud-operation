@@ -4,6 +4,7 @@
 
 # IDE
 /.idea
+.env
 /.awcache
 /.vscode
 

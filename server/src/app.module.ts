@@ -12,7 +12,8 @@ import { StatisticsModule } from './statistics/statistics.module';
 import { JwtModule } from '@nestjs/jwt';
 import { CallbacksModule } from './callbacks/callbacks.module';
 import * as fs from 'fs';
-import * as path from 'path';
+import * as path from 'path'; 
+
 
 @Module({
   imports: [
@@ -23,7 +24,7 @@ import * as path from 'path';
       signOptions: { algorithm: 'RS256', expiresIn: '1h' },
     }),
     // TypeOrmModule.forRoot(mysqlConfig),
-    TypeOrmModule.forRoot(mongodbConfig), 
+    TypeOrmModule.forRoot(mongodbConfig),  
     AuthModule,
     UsersModule,
     PartnerModule,
