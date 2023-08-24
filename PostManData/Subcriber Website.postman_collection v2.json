@@ -1,0 +1,450 @@
+{
+	"info": {
+		"_postman_id": "2c43b030-5eb7-45bd-9c9d-57b851423024",
+		"name": "Subcriber Website",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "1342918"
+	},
+	"item": [
+		{
+			"name": "auth/login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "DNT",
+						"value": "1"
+					},
+					{
+						"key": "Origin",
+						"value": "http://localhost:3001"
+					},
+					{
+						"key": "Referer",
+						"value": "http://localhost:3001/"
+					},
+					{
+						"key": "Sec-Fetch-Dest",
+						"value": "empty"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "cors"
+					},
+					{
+						"key": "Sec-Fetch-Site",
+						"value": "same-site"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Chromium\";v=\"116\", \"Not)A;Brand\";v=\"24\", \"Google Chrome\";v=\"116\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"macOS\""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"email\":\"lilan.maduranga@gmail.com\",\"password\":\"1234\"}"
+				},
+				"url": "http://localhost:3000/auth/login"
+			},
+			"response": []
+		},
+		{
+			"name": "/service",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGUzOWQ5MTUyODg1MTdkMzk3NWY4MDIiLCJlbWFpbCI6ImxpbGFuLm1hZHVyYW5nYUBnbWFpbC5jb20iLCJpYXQiOjE2OTI4NTY1NDQsImV4cCI6MTY5Mjg2MDE0NH0.zgOH2dnk0LWLpr0VBjTc9V1KPPKmM_P2ImppkrQn239IkM7OrDn9jwEPEJIUTI_hb-wU9gxn5JEl6j32Aajm6WIywzfBx2-1sNHzwrApvaPQXJhQ2MjYLQ_YHIZW2duF3hO07Q9hbKMkwlrBBIWmeW5u3k8g8GO4CyhRkhTzz2C4HnM0DBD5VobbZCzyVDyG7ELJp39HkOB9CI1GlRah9PwpC7qZ_vuWsIypspsz-MXFZFSVE1bEQJOS2SzRSX__yWKCQQoDkMvTz_YFxgc2oDny29jtbC4jxuxIiNk_d9H98d6BkQv7gAf-KboZQ2ylE7gXIx-7A4rUARQsUpbMDQ"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "DNT",
+						"value": "1"
+					},
+					{
+						"key": "If-None-Match",
+						"value": "W/\"4d8-2rUNpiQ5erd1zpd/XbY4Ipqnymk\""
+					},
+					{
+						"key": "Origin",
+						"value": "http://localhost:3001"
+					},
+					{
+						"key": "Referer",
+						"value": "http://localhost:3001/"
+					},
+					{
+						"key": "Sec-Fetch-Dest",
+						"value": "empty"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "cors"
+					},
+					{
+						"key": "Sec-Fetch-Site",
+						"value": "same-site"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Chromium\";v=\"116\", \"Not)A;Brand\";v=\"24\", \"Google Chrome\";v=\"116\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"macOS\""
+					}
+				],
+				"url": "http://localhost:3000/service"
+			},
+			"response": []
+		},
+		{
+			"name": "/subscribe",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGUzOWQ5MTUyODg1MTdkMzk3NWY4MDIiLCJlbWFpbCI6ImxpbGFuLm1hZHVyYW5nYUBnbWFpbC5jb20iLCJpYXQiOjE2OTI4NTY1NDQsImV4cCI6MTY5Mjg2MDE0NH0.zgOH2dnk0LWLpr0VBjTc9V1KPPKmM_P2ImppkrQn239IkM7OrDn9jwEPEJIUTI_hb-wU9gxn5JEl6j32Aajm6WIywzfBx2-1sNHzwrApvaPQXJhQ2MjYLQ_YHIZW2duF3hO07Q9hbKMkwlrBBIWmeW5u3k8g8GO4CyhRkhTzz2C4HnM0DBD5VobbZCzyVDyG7ELJp39HkOB9CI1GlRah9PwpC7qZ_vuWsIypspsz-MXFZFSVE1bEQJOS2SzRSX__yWKCQQoDkMvTz_YFxgc2oDny29jtbC4jxuxIiNk_d9H98d6BkQv7gAf-KboZQ2ylE7gXIx-7A4rUARQsUpbMDQ"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "DNT",
+						"value": "1"
+					},
+					{
+						"key": "Origin",
+						"value": "http://localhost:3001"
+					},
+					{
+						"key": "Referer",
+						"value": "http://localhost:3001/"
+					},
+					{
+						"key": "Sec-Fetch-Dest",
+						"value": "empty"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "cors"
+					},
+					{
+						"key": "Sec-Fetch-Site",
+						"value": "same-site"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Chromium\";v=\"116\", \"Not)A;Brand\";v=\"24\", \"Google Chrome\";v=\"116\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"macOS\""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"serviceId\":\"64e6d97263ff4d01b8257140\"}"
+				},
+				"url": "http://localhost:3000/subscribe"
+			},
+			"response": []
+		},
+		{
+			"name": "/unsubscribe",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGUzOWQ5MTUyODg1MTdkMzk3NWY4MDIiLCJlbWFpbCI6ImxpbGFuLm1hZHVyYW5nYUBnbWFpbC5jb20iLCJpYXQiOjE2OTI4NTY1NDQsImV4cCI6MTY5Mjg2MDE0NH0.zgOH2dnk0LWLpr0VBjTc9V1KPPKmM_P2ImppkrQn239IkM7OrDn9jwEPEJIUTI_hb-wU9gxn5JEl6j32Aajm6WIywzfBx2-1sNHzwrApvaPQXJhQ2MjYLQ_YHIZW2duF3hO07Q9hbKMkwlrBBIWmeW5u3k8g8GO4CyhRkhTzz2C4HnM0DBD5VobbZCzyVDyG7ELJp39HkOB9CI1GlRah9PwpC7qZ_vuWsIypspsz-MXFZFSVE1bEQJOS2SzRSX__yWKCQQoDkMvTz_YFxgc2oDny29jtbC4jxuxIiNk_d9H98d6BkQv7gAf-KboZQ2ylE7gXIx-7A4rUARQsUpbMDQ"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "DNT",
+						"value": "1"
+					},
+					{
+						"key": "Origin",
+						"value": "http://localhost:3001"
+					},
+					{
+						"key": "Referer",
+						"value": "http://localhost:3001/"
+					},
+					{
+						"key": "Sec-Fetch-Dest",
+						"value": "empty"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "cors"
+					},
+					{
+						"key": "Sec-Fetch-Site",
+						"value": "same-site"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Chromium\";v=\"116\", \"Not)A;Brand\";v=\"24\", \"Google Chrome\";v=\"116\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"macOS\""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"subscriptionId\":\"64e6f0e28bb50b5c23d3718f\"}"
+				},
+				"url": "http://localhost:3000/unsubscribe"
+			},
+			"response": []
+		},
+		{
+			"name": "/callbacks/unsubscribe",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGUzOWQ5MTUyODg1MTdkMzk3NWY4MDIiLCJlbWFpbCI6ImxpbGFuLm1hZHVyYW5nYUBnbWFpbC5jb20iLCJpYXQiOjE2OTI4NTY1NDQsImV4cCI6MTY5Mjg2MDE0NH0.zgOH2dnk0LWLpr0VBjTc9V1KPPKmM_P2ImppkrQn239IkM7OrDn9jwEPEJIUTI_hb-wU9gxn5JEl6j32Aajm6WIywzfBx2-1sNHzwrApvaPQXJhQ2MjYLQ_YHIZW2duF3hO07Q9hbKMkwlrBBIWmeW5u3k8g8GO4CyhRkhTzz2C4HnM0DBD5VobbZCzyVDyG7ELJp39HkOB9CI1GlRah9PwpC7qZ_vuWsIypspsz-MXFZFSVE1bEQJOS2SzRSX__yWKCQQoDkMvTz_YFxgc2oDny29jtbC4jxuxIiNk_d9H98d6BkQv7gAf-KboZQ2ylE7gXIx-7A4rUARQsUpbMDQ"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "DNT",
+						"value": "1"
+					},
+					{
+						"key": "Origin",
+						"value": "http://localhost:3001"
+					},
+					{
+						"key": "Referer",
+						"value": "http://localhost:3001/"
+					},
+					{
+						"key": "Sec-Fetch-Dest",
+						"value": "empty"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "cors"
+					},
+					{
+						"key": "Sec-Fetch-Site",
+						"value": "same-site"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Chromium\";v=\"116\", \"Not)A;Brand\";v=\"24\", \"Google Chrome\";v=\"116\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"macOS\""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"subscriptionId\":\"64e6f0e28bb50b5c23d3718f\"}"
+				},
+				"url": "http://localhost:3000/callbacks/unsubscribe"
+			},
+			"response": []
+		},
+		{
+			"name": "/callbacks/subscribe",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NGUzOWQ5MTUyODg1MTdkMzk3NWY4MDIiLCJlbWFpbCI6ImxpbGFuLm1hZHVyYW5nYUBnbWFpbC5jb20iLCJpYXQiOjE2OTI4NTY1NDQsImV4cCI6MTY5Mjg2MDE0NH0.zgOH2dnk0LWLpr0VBjTc9V1KPPKmM_P2ImppkrQn239IkM7OrDn9jwEPEJIUTI_hb-wU9gxn5JEl6j32Aajm6WIywzfBx2-1sNHzwrApvaPQXJhQ2MjYLQ_YHIZW2duF3hO07Q9hbKMkwlrBBIWmeW5u3k8g8GO4CyhRkhTzz2C4HnM0DBD5VobbZCzyVDyG7ELJp39HkOB9CI1GlRah9PwpC7qZ_vuWsIypspsz-MXFZFSVE1bEQJOS2SzRSX__yWKCQQoDkMvTz_YFxgc2oDny29jtbC4jxuxIiNk_d9H98d6BkQv7gAf-KboZQ2ylE7gXIx-7A4rUARQsUpbMDQ"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "DNT",
+						"value": "1"
+					},
+					{
+						"key": "Origin",
+						"value": "http://localhost:3001"
+					},
+					{
+						"key": "Referer",
+						"value": "http://localhost:3001/"
+					},
+					{
+						"key": "Sec-Fetch-Dest",
+						"value": "empty"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "cors"
+					},
+					{
+						"key": "Sec-Fetch-Site",
+						"value": "same-site"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Chromium\";v=\"116\", \"Not)A;Brand\";v=\"24\", \"Google Chrome\";v=\"116\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"macOS\""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"serviceId\":\"64e6d97263ff4d01b8257140\"}"
+				},
+				"url": "http://localhost:3000/callbacks/subscribe"
+			},
+			"response": []
+		}
+	]
+}
